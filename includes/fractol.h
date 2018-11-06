@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 10:46:53 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/06 11:38:27 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/06 12:33:13 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ struct		s_image
 {
 	void	*img_ptr;
 	char	*data;
-	int		*points;
 	int		bpp;
 	int		size_line;
 	int		endian;
@@ -62,7 +61,7 @@ struct		s_map
 {
 	t_image	*image;
 	int		(*processor)(float, float, int);
-	int		**iterations;
+	int		max_iter;
 };
 
 typedef struct s_menu	t_menu;
@@ -106,6 +105,15 @@ struct		s_fract
 	t_ctrl	ctrl;
 };
 
+typedef pthread_t	t_pthr;
+typedef struct s_thread	t_thread;
+struct		s_thread
+{
+	t_pthr	pthr;
+	int		id;
+	t_fract	*fract;
+};
+
 /*
 ** Mallocs
 */
@@ -131,10 +139,23 @@ void		ft_put_menu(t_fract *fract);
 int			handle_keypress(int key, t_fract *fract);
 
 /*
+** Render
+*/
+
+void		render(t_fract *fract);
+
+/*
+** Fractals
+*/
+
+int			ft_process_mandelbrot(float x, float y, int max_iter);
+
+/*
 ** Errors
 */
 
 void		exit_error(char *message);
+void		exit_error_destroy(char *message, t_fract *fract);
 
 /*
 ** Colors
@@ -161,6 +182,7 @@ void		ft_draw_square(t_image *image, t_vec2d start, t_vec2d end,
 */
 
 t_vec2d		to_vec2d(int x, int y);
+int			check_map(t_fract *fract);
 
 /*
 ** Xpm

@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 16:36:14 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/06 11:34:08 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/06 12:50:55 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,14 @@ t_menu		*ft_new_menu(t_fract *fract)
 
 	if (!(menu = ft_memalloc(sizeof(*menu))))
 		return (NULL);
-	menu->img = ft_new_image(fract, MENU_WIDTH, WIN_HEIGHT);
+	if (!(menu->img = ft_new_image(fract, MENU_WIDTH, WIN_HEIGHT)))
+	{
+		free(menu);
+		return (NULL);
+	}
 	menu->enabled = 1;
 	menu->start_color = ft_int_to_color(COLOR_WHITE);
-	menu->end_color = ft_int_to_color(COLOR_RED);
+	menu->end_color = ft_int_to_color(0);
 	return (menu);
 }
 
@@ -33,11 +37,12 @@ t_image		*ft_new_image(t_fract *fract, int width, int height)
 		return (NULL);
 	img->img_ptr = mlx_new_image(fract->mlx_ptr, width, height);
 	if (img->img_ptr == NULL)
-		exit_error("Could not allocate enough memory");
+	{
+		free(img);
+		return (NULL);
+	}
 	img->data = mlx_get_data_addr(img->img_ptr,
 			&(img->bpp), &(img->size_line), &(img->endian));
-	if (!(img->points = malloc(sizeof(int) * (width * height))))
-		exit_error("Could not allocate enough memory");
 	img->bpp /= 8;
 	img->width = width;
 	img->height = height;
@@ -50,6 +55,11 @@ t_fract		*ft_new_fract(void)
 
 	if (!(fract = ft_memalloc(sizeof(t_fract))))
 		return (NULL);
+	if (!(fract->map = ft_new_map()))
+	{
+		free(fract);
+		return (NULL);
+	}
 	return (fract);
 }
 
@@ -59,5 +69,7 @@ t_map		*ft_new_map(void)
 
 	if (!(map = ft_memalloc(sizeof(*map))))
 		return (NULL);
+	map->max_iter = 50;
+	map->processor = ft_process_mandelbrot;
 	return (map);
 }

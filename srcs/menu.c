@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/24 15:20:14 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/06 11:22:40 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/06 12:54:01 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 void		ft_put_menu(t_fract *fract)
 {
+	ft_printf("menu put\n");
 	mlx_put_image_to_window(fract->mlx_ptr, fract->win_ptr,
 			fract->menu->img->img_ptr, 0, 0);
 }
@@ -66,7 +67,10 @@ static void	ft_put_rgb_selector(t_menu *menu)
 void		ft_init_menu(t_fract *fract)
 {
 	if (!(fract->menu = ft_new_menu(fract)))
-		exit_error("Could not allocate enough memory");
+	{
+		ft_printf_fd(2, "fractol: could not allocate enough memory\n");
+		destroy_fract_exit(fract);
+	}
 	ft_draw_square(fract->menu->img, to_vec2d(0, 0),
 			to_vec2d(MENU_WIDTH, WIN_HEIGHT), MENU_COLOR);
 	ft_draw_square(fract->menu->img, to_vec2d(MENU_WIDTH - 3, 0),
