@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/24 15:20:14 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/06 12:54:01 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/06 14:39:50 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void		ft_put_menu(t_fract *fract)
 {
-	ft_printf("menu put\n");
 	mlx_put_image_to_window(fract->mlx_ptr, fract->win_ptr,
 			fract->menu->img->img_ptr, 0, 0);
 }

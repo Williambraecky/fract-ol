@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 16:36:14 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/06 12:50:55 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/06 14:48:38 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ t_map		*ft_new_map(void)
 
 	if (!(map = ft_memalloc(sizeof(*map))))
 		return (NULL);
+	map->zoom = 1;
 	map->max_iter = 50;
 	map->processor = ft_process_mandelbrot;
 	return (map);

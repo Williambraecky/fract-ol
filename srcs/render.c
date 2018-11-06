@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:35:47 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/06 12:50:02 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/06 15:00:13 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,11 @@ int		pixel_process(t_fract *fract, t_image *img, int x, int y)
 	int iter;
 
 	iter = fract->map->processor(
-		ft_lerp(-2.5, 1.5, ft_ilerp(0, img->width, x)),
-		ft_lerp(-1.5, 1.5, ft_ilerp(0, img->height, y)),
+		ft_lerp(-2.5 * fract->map->zoom, 1.5 * fract->map->zoom,
+			ft_ilerp(0, img->width, x + fract->map->x_offset)),
+		ft_lerp(-1.5 * fract->map->zoom, 1.5 * fract->map->zoom,
+			ft_ilerp(0, img->height, y + fract->map->y_offset)),
 		fract->map->max_iter);
-	// if (iter == fract->map->max_iter)
-	// 	return (0xFFFFFF);
-	// else
-	// 	return (0);
 	return (ft_color_to_int(ft_color_lerp(fract->menu->start_color,
 		fract->menu->end_color, (float)iter / (float)fract->map->max_iter)));
 }
@@ -43,8 +41,8 @@ void	*render_partition(void *ptr)
 
 	thr = (t_thread *)ptr;
 	image = thr->fract->map->image;
-	y = (image->height / 4) * thr->id;
-	max_y = (image->height / 4) * (thr->id + 1);
+	y = (image->height / NB_THREAD) * thr->id;
+	max_y = (image->height / NB_THREAD) * (thr->id + 1);
 	while (y < max_y)
 	{
 		x = 0;
@@ -67,7 +65,7 @@ void	put_map(t_fract *fract, t_map *map)
 
 void	render(t_fract *fract)
 {
-	t_thread	threads[4];
+	t_thread	threads[NB_THREAD];
 	int			i;
 
 	if (!fract)
@@ -75,7 +73,7 @@ void	render(t_fract *fract)
 	if (!check_map(fract))
 		exit_error_destroy("could not create image for render", fract);
 	i = 0;
-	while (i < 4)
+	while (i < NB_THREAD)
 	{
 		threads[i].id = i;
 		threads[i].fract = fract;
@@ -88,7 +86,7 @@ void	render(t_fract *fract)
 		i++;
 	}
 	i = 0;
-	while (i < 4)
+	while (i < NB_THREAD)
 		pthread_join(threads[i++].pthr, NULL);
 	put_map(fract, fract->map);
 }

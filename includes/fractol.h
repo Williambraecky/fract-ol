@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 10:46:53 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/06 12:33:13 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/06 14:57:50 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # define TRANSPARENT -16777216
 # define COLOR_RED 0xFF0000
 # define COLOR_WHITE 0xFFFFFF
+# define NB_THREAD 4
 
 typedef struct s_color	t_color;
 struct		s_color
@@ -61,7 +62,10 @@ struct		s_map
 {
 	t_image	*image;
 	int		(*processor)(float, float, int);
+	float	zoom;
 	int		max_iter;
+	int		x_offset;
+	int		y_offset;
 };
 
 typedef struct s_menu	t_menu;
@@ -137,6 +141,7 @@ void		ft_put_menu(t_fract *fract);
 */
 
 int			handle_keypress(int key, t_fract *fract);
+int			handle_mouseclicks(int button, int x, int y, t_fract *fract);
 
 /*
 ** Render
