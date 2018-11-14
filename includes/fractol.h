@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 10:46:53 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/06 14:57:50 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/14 14:52:54 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,13 @@
 # define COLOR_RED 0xFF0000
 # define COLOR_WHITE 0xFFFFFF
 # define NB_THREAD 4
+
+typedef struct s_pix	t_pix;
+struct		s_pix
+{
+	int		iterations;
+	float	c;
+};
 
 typedef struct s_color	t_color;
 struct		s_color
@@ -61,8 +68,9 @@ typedef struct s_map	t_map;
 struct		s_map
 {
 	t_image	*image;
-	int		(*processor)(float, float, int);
+	t_pix	(*processor)(float, float, int);
 	float	zoom;
+	int		smooth;
 	int		max_iter;
 	int		x_offset;
 	int		y_offset;
@@ -135,6 +143,8 @@ void		destroy_image(t_fract *fract, t_image *image);
 
 void		ft_init_menu(t_fract *fract);
 void		ft_put_menu(t_fract *fract);
+void		ft_put_rgb_target(t_menu *menu);
+void		ft_put_rgb_selector(t_menu *menu);
 
 /*
 ** Listeners
@@ -153,7 +163,7 @@ void		render(t_fract *fract);
 ** Fractals
 */
 
-int			ft_process_mandelbrot(float x, float y, int max_iter);
+t_pix		ft_process_mandelbrot(float x, float y, int max_iter);
 
 /*
 ** Errors

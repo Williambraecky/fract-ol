@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/24 15:20:14 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/06 14:39:50 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/14 13:59:51 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		ft_put_menu(t_fract *fract)
 			fract->menu->img->img_ptr, 0, 0);
 }
 
-static void	ft_put_rgb_target(t_menu *menu)
+void		ft_put_rgb_target(t_menu *menu)
 {
 	t_color	color;
 	int		y;
@@ -40,7 +40,7 @@ static void	ft_put_rgb_target(t_menu *menu)
 	}
 }
 
-static void	ft_put_rgb_selector(t_menu *menu)
+void		ft_put_rgb_selector(t_menu *menu)
 {
 	int	y;
 	int	x;

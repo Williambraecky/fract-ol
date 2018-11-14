@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:35:47 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/06 15:00:13 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/14 14:54:22 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,32 @@
 
 int		pixel_process(t_fract *fract, t_image *img, int x, int y)
 {
-	int iter;
+	t_pix	pix;
+	double i;
+	double zn;
+	double nu;
 
-	iter = fract->map->processor(
+	pix = fract->map->processor(
 		ft_lerp(-2.5 * fract->map->zoom, 1.5 * fract->map->zoom,
 			ft_ilerp(0, img->width, x + fract->map->x_offset)),
 		ft_lerp(-1.5 * fract->map->zoom, 1.5 * fract->map->zoom,
 			ft_ilerp(0, img->height, y + fract->map->y_offset)),
 		fract->map->max_iter);
-	return (ft_color_to_int(ft_color_lerp(fract->menu->start_color,
-		fract->menu->end_color, (float)iter / (float)fract->map->max_iter)));
+	if (pix.iterations == fract->map->max_iter)
+		return (ft_color_to_int(fract->menu->end_color));
+	if (fract->map->smooth)
+	{
+		zn = log(pix.c * pix.c + pix.iterations * pix.iterations) / 2.0f;
+		nu = log(zn / log(2)) / log(2);
+		i = pix.iterations + 1 - nu;
+		if (i < 0)
+			i = 0;
+	}
+	else
+		i = (float)pix.iterations;
+	return (ft_color_to_int(ft_color_lerp(fract->menu->end_color,
+		fract->menu->start_color,
+		i / (float) fract->map->max_iter)));
 }
 
 void	*render_partition(void *ptr)
