@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 16:36:14 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/06 14:48:38 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/15 14:00:40 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ t_menu		*ft_new_menu(t_fract *fract)
 		return (NULL);
 	}
 	menu->enabled = 1;
-	menu->start_color = ft_int_to_color(COLOR_WHITE);
-	menu->end_color = ft_int_to_color(0);
+	menu->start_color = ft_int_to_color(0);
+	menu->end_color = ft_int_to_color(COLOR_WHITE);
 	return (menu);
 }
 
@@ -70,7 +70,8 @@ t_map		*ft_new_map(void)
 	if (!(map = ft_memalloc(sizeof(*map))))
 		return (NULL);
 	map->zoom = 1;
-	map->max_iter = 50;
+	map->smooth = 1;
+	map->max_iter = 32;
 	map->processor = ft_process_mandelbrot;
 	return (map);
 }
