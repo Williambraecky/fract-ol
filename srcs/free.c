@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:24:31 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/06 12:27:21 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/15 15:49:47 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	destroy_menu(t_fract *fract, t_menu *menu)
 		return ;
 	if (menu->img)
 		destroy_image(fract, menu->img);
+	free(menu);
 }
 
 void	destroy_map(t_fract *fract, t_map *map)
@@ -45,5 +46,8 @@ void	destroy_fract_exit(t_fract *fract)
 	destroy_menu(fract, fract->menu);
 	mlx_destroy_window(fract->mlx_ptr, fract->win_ptr);
 	ft_memdel((void **)&fract);
+	fract = NULL;
+	while (19)
+	;
 	exit(0);
 }
