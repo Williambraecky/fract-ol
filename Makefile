@@ -6,7 +6,7 @@
 #    By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/09/25 13:02:54 by wbraeckm          #+#    #+#              #
-#    Updated: 2018/11/06 11:39:41 by wbraeckm         ###   ########.fr        #
+#    Updated: 2018/11/15 15:11:44 by wbraeckm         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,6 @@ fclean: clean
 	@printf $(ccred)
 	rm -rf $(NAME_PUSHSWAP) $(NAME_CHECKER)
 	@make -C $(LIBFOLDER) fclean
-	@make -C $(MLXFOLDER) fclean
 	@printf $(ccreset)
 
 re: fclean all
