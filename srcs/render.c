@@ -6,32 +6,51 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:35:47 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/14 14:54:22 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/15 15:16:16 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
 
+void	process_zoom(int x, int y, t_fract *fract, double zoom)
+{
+	double	mx;
+	double	my;
+
+	if (fract->menu->enabled)
+		x -= MENU_WIDTH;
+	mx = ft_lerp(-2.5, 1.5, (double)x / (double)fract->map->image->width)
+	* fract->map->zoom;
+	my = ft_lerp(-1.5, 1.5, (double)y / (double)fract->map->image->height)
+	* fract->map->zoom;
+	fract->map->x_offset -= mx * zoom;
+	fract->map->y_offset -= my * zoom;
+	if (zoom > 0)
+		fract->map->zoom *= 1.05;
+	else
+		fract->map->zoom *= 0.95;
+}
+
 /*
 ** Returns the color of the pixel
-** TODO: use zoom and movement
+** TODO: Reword zoom and movement + adapt for other fractals
 */
 
 int		pixel_process(t_fract *fract, t_image *img, int x, int y)
 {
 	t_pix	pix;
-	double i;
-	double zn;
-	double nu;
+	double	i;
+	double	zn;
+	double	nu;
 
 	pix = fract->map->processor(
-		ft_lerp(-2.5 * fract->map->zoom, 1.5 * fract->map->zoom,
-			ft_ilerp(0, img->width, x + fract->map->x_offset)),
-		ft_lerp(-1.5 * fract->map->zoom, 1.5 * fract->map->zoom,
-			ft_ilerp(0, img->height, y + fract->map->y_offset)),
+		ft_lerp(-2.5, 1.5, (double)x / (double)img->width) * fract->map->zoom +
+		fract->map->x_offset,
+		ft_lerp(-1.5, 1.5, (double)y / (double)img->height) * fract->map->zoom +
+		fract->map->y_offset,
 		fract->map->max_iter);
 	if (pix.iterations == fract->map->max_iter)
-		return (ft_color_to_int(fract->menu->end_color));
+		return (0);
 	if (fract->map->smooth)
 	{
 		zn = log(pix.c * pix.c + pix.iterations * pix.iterations) / 2.0f;
@@ -41,10 +60,10 @@ int		pixel_process(t_fract *fract, t_image *img, int x, int y)
 			i = 0;
 	}
 	else
-		i = (float)pix.iterations;
-	return (ft_color_to_int(ft_color_lerp(fract->menu->end_color,
-		fract->menu->start_color,
-		i / (float) fract->map->max_iter)));
+		i = (double)pix.iterations;
+	return (ft_color_to_int(ft_color_lerp(fract->menu->start_color,
+		fract->menu->end_color,
+		i / (double) fract->map->max_iter)));
 }
 
 void	*render_partition(void *ptr)

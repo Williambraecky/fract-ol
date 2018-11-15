@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 10:46:24 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/06 14:46:59 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/15 14:16:42 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ int		main(int argc, char **argv)
 	ft_init_menu(fract);
 	mlx_key_hook(fract->win_ptr, handle_keypress, fract);
 	mlx_mouse_hook(fract->win_ptr, handle_mouseclicks, fract);
+	mlx_hook(fract->win_ptr, BUTTONRELEASE, 0, handle_mouseclicks, fract);
+	mlx_hook(fract->win_ptr, MOTIONNOTIFY, BUTTON1MOTIONMASK,
+			handle_button_movement, fract);
 	render(fract);
 	mlx_loop(fract->mlx_ptr);
 	return (0);
