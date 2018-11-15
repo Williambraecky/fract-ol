@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:23:26 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/15 15:26:26 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/15 16:37:09 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,19 +92,8 @@ int		handle_button_movement(int x, int y, t_fract *fract)
 	return (1);
 }
 
-#include <stdio.h>
-void print_debug(t_fract *fract) {
-	printf("zoom: %.50f\nx_off: %.50f\ny_off: %.50f\niter: %d\n",
-	fract->map->zoom, fract->map->x_offset, fract->map->y_offset, fract->map->max_iter);
-}
-
 int		handle_keypress(int key, t_fract *fract)
 {
-	if (key == D_KEY)
-	{
-		print_debug(fract);
-		return (1);
-	}
 	if (key == ESC_KEY)
 		destroy_fract_exit(fract);
 	else if (key == MN_KEY && fract->map->max_iter > 7)
