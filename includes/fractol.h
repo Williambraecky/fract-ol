@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 10:46:53 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/14 14:52:54 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/15 15:44:33 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,32 @@
 # define TRANSPARENT -16777216
 # define COLOR_RED 0xFF0000
 # define COLOR_WHITE 0xFFFFFF
+# define COLOR_BLACK 0x000000
 # define NB_THREAD 4
+
+typedef unsigned char	t_u8;
 
 typedef struct s_pix	t_pix;
 struct		s_pix
 {
 	int		iterations;
-	float	c;
+	double	c;
 };
 
-typedef struct s_color	t_color;
-struct		s_color
+typedef struct s_rgb	t_rgb;
+struct		s_rgb
 {
-	int		r;
-	int		g;
-	int		b;
+	t_u8	b;
+	t_u8	g;
+	t_u8	r;
+	t_u8	a;
+};
+
+typedef union s_color	t_color;
+union		s_color
+{
+	t_rgb	rgb;
+	int		color;
 };
 
 typedef struct s_vec2d	t_vec2d;
@@ -68,12 +79,12 @@ typedef struct s_map	t_map;
 struct		s_map
 {
 	t_image	*image;
-	t_pix	(*processor)(float, float, int);
-	float	zoom;
+	t_pix	(*processor)(double, double, int);
+	double	zoom;
 	int		smooth;
 	int		max_iter;
-	int		x_offset;
-	int		y_offset;
+	double	x_offset;
+	double	y_offset;
 };
 
 typedef struct s_menu	t_menu;
@@ -152,18 +163,20 @@ void		ft_put_rgb_selector(t_menu *menu);
 
 int			handle_keypress(int key, t_fract *fract);
 int			handle_mouseclicks(int button, int x, int y, t_fract *fract);
+int			handle_button_movement(int x, int y, t_fract *fract);
 
 /*
 ** Render
 */
 
 void		render(t_fract *fract);
+void		process_zoom(int x, int y, t_fract *fract, double zoom);
 
 /*
 ** Fractals
 */
 
-t_pix		ft_process_mandelbrot(float x, float y, int max_iter);
+t_pix		ft_process_mandelbrot(double x, double y, int max_iter);
 
 /*
 ** Errors
@@ -180,7 +193,7 @@ int			ft_rgb_to_int(int r, int g, int b);
 int			ft_color_to_int(t_color color);
 t_color		ft_rgb_to_color(int r, int g, int b);
 t_color		ft_int_to_color(int rgb);
-t_color		ft_color_lerp(t_color start, t_color end, float percent);
+t_color		ft_color_lerp(t_color start, t_color end, double percent);
 
 /*
 ** Draw
