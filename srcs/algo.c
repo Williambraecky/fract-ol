@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 10:33:14 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/14 14:33:13 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/15 15:44:46 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,23 @@
 ** Returns the number of iterations for said pixel
 */
 
-t_pix	ft_process_mandelbrot(float x, float y, int max_iter)
+t_pix	ft_process_mandelbrot(double x, double y, int max_iter)
 {
 	int		iterations;
-	float	zx;
-	float	zy;
-	float	zx2;
-	float	zy2;
+	double	zx;
+	double	zy;
+	double	zx2;
+	double	zy2;
 
 	iterations = 0;
 	zx = 0;
 	zy = 0;
 	zx2 = zx * zx;
 	zy2 = zy * zy;
-	while (iterations < max_iter && (zx2 + zy2) < 256)
+	while (iterations < max_iter && (zx2 + zy2) < 256.0)
 	{
-		zy = 2 * zx * zy + y;
+		zy = (zx + zy) * (zx + zy) - zx2 - zy2;
+		zy += y;
 		zx = zx2 - zy2 + x;
 		zx2 = zx * zx;
 		zy2 = zy * zy;
