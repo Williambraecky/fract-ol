@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 10:46:53 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/22 21:34:52 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/22 22:49:43 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,13 @@ union		s_color
 	int		color;
 };
 
+typedef struct s_cols	t_cols;
+struct		s_cols
+{
+	double	percent;
+	t_color	color;
+};
+
 typedef struct s_vec2d	t_vec2d;
 struct		s_vec2d
 {
@@ -94,6 +101,9 @@ struct		s_menu
 {
 	int		enabled;
 	int		red;
+	double	current;
+	t_cols	*colors;
+	size_t	size;
 	t_color	start_color;
 	t_color	end_color;
 	t_image	*img;
@@ -157,8 +167,10 @@ void		destroy_image(t_fract *fract, t_image *image);
 
 void		ft_init_menu(t_fract *fract);
 void		ft_put_menu(t_fract *fract);
-void		ft_put_rgb_target(t_menu *menu);
+void		ft_put_rgb_target(t_fract *fract, t_menu *menu);
 void		ft_put_rgb_selector(t_menu *menu);
+void		add_color(t_fract *fract, t_color color, double percent);
+void		reset_colors(t_fract *fract);
 
 /*
 ** Listeners
@@ -167,6 +179,7 @@ void		ft_put_rgb_selector(t_menu *menu);
 int			handle_keypress(int key, t_fract *fract);
 int			handle_mouseclicks(int button, int x, int y, t_fract *fract);
 int			handle_button_movement(int x, int y, t_fract *fract);
+int			menu_listener(int x, int y, t_fract *fract, int is_move);
 
 /*
 ** Render
@@ -200,7 +213,7 @@ int			ft_color_to_int(t_color color);
 t_color		ft_rgb_to_color(int r, int g, int b);
 t_color		ft_int_to_color(int rgb);
 t_color		ft_color_lerp(t_color start, t_color end, double percent);
-int			color_for(t_fract *fract, float percent);
+t_color		color_for(t_fract *fract, double percent);
 
 /*
 ** Draw

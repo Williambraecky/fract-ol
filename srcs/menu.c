@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/24 15:20:14 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/22 21:37:54 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/22 22:38:59 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,30 @@ void		ft_put_menu(t_fract *fract)
 			fract->menu->img->img_ptr, 0, 0);
 }
 
-void		ft_put_rgb_target(t_menu *menu)
+t_color		color_for(t_fract *fract, double percent)
 {
-	t_color	color;
-	int		y;
-	int		x;
+	t_color	prev_color;
+	double	prev_prcnt;
+	size_t	i;
 
-	x = 0;
-	while (x < 301)
+	prev_prcnt = 0.0;
+	prev_color = fract->menu->start_color;
+	i = 0;
+	while (i < fract->menu->size)
 	{
-		y = 0;
-		while (y < 25)
-		{
-			color = ft_color_lerp(menu->start_color, menu->end_color,
-					(float)x / 306.0);
-			ft_img_put_pixel(menu->img, x + 25, y + 569,
-					color.color);
-			y++;
-		}
-		x++;
+		if (percent < fract->menu->colors[i].percent)
+			return (ft_color_lerp(prev_color, fract->menu->colors[i].color,
+				(percent - prev_prcnt) * 1 /
+				(fract->menu->colors[i].percent - prev_prcnt)));
+		prev_prcnt = fract->menu->colors[i].percent;
+		prev_color = fract->menu->colors[i].color;
+		i++;
 	}
+	return (ft_color_lerp(prev_color, fract->menu->end_color,
+		(percent - prev_prcnt) * 1 / (1.0 - prev_prcnt)));
 }
 
-void		ft_put_rgb_target2(t_fract *fract, t_menu *menu)
+void		ft_put_rgb_target(t_fract *fract, t_menu *menu)
 {
 	int		color;
 	int		y;
@@ -50,7 +51,7 @@ void		ft_put_rgb_target2(t_fract *fract, t_menu *menu)
 	while (x < 301)
 	{
 		y = 0;
-		color = color_for(fract, (double)x / 301);
+		color = color_for(fract, (double)x / 300).color;
 		while (y < 25)
 		{
 			ft_img_put_pixel(menu->img, x + 25, y + 569, color);
@@ -101,8 +102,7 @@ void		ft_init_menu(t_fract *fract)
 	ft_draw_edges(fract->menu->img, to_vec2d(24, 568),
 			to_vec2d(326, 594), BORDER_COLOR);
 	ft_put_rgb_selector(fract->menu);
-	ft_put_rgb_target(fract->menu);
-	ft_put_rgb_target2(fract, fract->menu);
+	ft_put_rgb_target(fract, fract->menu);
 	ft_put_xpm_file_to_image(fract, "wbraeckm_logo.xpm",
 			fract->menu->img, to_vec2d(25, 25));
 	ft_put_xpm_file_to_image(fract, "logo19.xpm",

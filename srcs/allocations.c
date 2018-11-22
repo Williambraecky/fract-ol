@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 16:36:14 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/22 21:10:43 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/22 22:14:16 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ t_menu		*ft_new_menu(t_fract *fract)
 		free(menu);
 		return (NULL);
 	}
+	menu->current = -1.0;
 	menu->enabled = 1;
 	menu->start_color = ft_int_to_color(0);
 	menu->end_color = ft_int_to_color(COLOR_WHITE);
