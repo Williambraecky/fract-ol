@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:24:31 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/15 15:49:47 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/21 19:11:20 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,5 @@ void	destroy_fract_exit(t_fract *fract)
 	mlx_destroy_window(fract->mlx_ptr, fract->win_ptr);
 	ft_memdel((void **)&fract);
 	fract = NULL;
-	while (19)
-	;
 	exit(0);
 }
