@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/24 14:32:08 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/15 15:12:26 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/21 19:11:57 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int		ft_rgb_to_int(int r, int g, int b)
 	rgb |= b;
 	return (rgb);
 }
-
 
 /*
 ** DEPRECATED: Use color.color directly

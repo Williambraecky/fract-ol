@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/24 15:20:14 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/14 13:59:51 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/22 21:37:54 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,27 @@ void		ft_put_rgb_target(t_menu *menu)
 			color = ft_color_lerp(menu->start_color, menu->end_color,
 					(float)x / 306.0);
 			ft_img_put_pixel(menu->img, x + 25, y + 569,
-					ft_color_to_int(color));
+					color.color);
+			y++;
+		}
+		x++;
+	}
+}
+
+void		ft_put_rgb_target2(t_fract *fract, t_menu *menu)
+{
+	int		color;
+	int		y;
+	int		x;
+
+	x = 0;
+	while (x < 301)
+	{
+		y = 0;
+		color = color_for(fract, (double)x / 301);
+		while (y < 25)
+		{
+			ft_img_put_pixel(menu->img, x + 25, y + 569, color);
 			y++;
 		}
 		x++;
@@ -82,6 +102,7 @@ void		ft_init_menu(t_fract *fract)
 			to_vec2d(326, 594), BORDER_COLOR);
 	ft_put_rgb_selector(fract->menu);
 	ft_put_rgb_target(fract->menu);
+	ft_put_rgb_target2(fract, fract->menu);
 	ft_put_xpm_file_to_image(fract, "wbraeckm_logo.xpm",
 			fract->menu->img, to_vec2d(25, 25));
 	ft_put_xpm_file_to_image(fract, "logo19.xpm",

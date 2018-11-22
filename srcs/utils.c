@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:06:21 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/06 12:32:07 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/22 15:42:33 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,26 @@ int		check_map(t_fract *fract)
 		ft_memset(map->image->data, 0,
 				map->image->width * map->image->height * map->image->bpp);
 	return (1);
+}
+
+void	handle_movement(int keycode, t_fract *fract)
+{
+	double	m;
+
+	if (keycode == UP_KEY || keycode == DOWN_KEY)
+	{
+		if (keycode == UP_KEY)
+			m = ft_lerp(-1.5, 1.5, 0.51) * fract->map->zoom;
+		else
+			m = ft_lerp(-1.5, 1.5, 0.49) * fract->map->zoom;
+		fract->map->y_offset -= m;
+	}
+	else
+	{
+		if (keycode == LEFT_KEY)
+			m = ft_lerp(-2.5, 2.5, 0.49) * fract->map->zoom;
+		else
+			m = ft_lerp(-2.5, 2.5, 0.51) * fract->map->zoom;
+		fract->map->x_offset += m;
+	}
 }

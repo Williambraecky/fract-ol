@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 10:46:53 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/15 15:44:33 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/22 21:34:52 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,14 @@ typedef struct s_map	t_map;
 struct		s_map
 {
 	t_image	*image;
-	t_pix	(*processor)(double, double, int);
+	t_pix	(*processor)(double, double, t_map *);
 	double	zoom;
 	int		smooth;
 	int		max_iter;
 	double	x_offset;
 	double	y_offset;
+	double	real;
+	double	imaginary;
 };
 
 typedef struct s_menu	t_menu;
@@ -104,6 +106,7 @@ struct		s_ctrl
 	int		inside_menu;
 	int		last_x;
 	int		last_y;
+	int		locked;
 };
 
 typedef struct s_xpm	t_xpm;
@@ -171,12 +174,15 @@ int			handle_button_movement(int x, int y, t_fract *fract);
 
 void		render(t_fract *fract);
 void		process_zoom(int x, int y, t_fract *fract, double zoom);
+void		handle_movement(int keycode, t_fract *fract);
 
 /*
 ** Fractals
 */
 
-t_pix		ft_process_mandelbrot(double x, double y, int max_iter);
+t_pix		process_mandelbrot(double x, double y, t_map *map);
+t_pix		process_julia(double x, double y, t_map *map);
+t_pix		process_burning_ship(double x, double y, t_map *map);
 
 /*
 ** Errors
@@ -194,6 +200,7 @@ int			ft_color_to_int(t_color color);
 t_color		ft_rgb_to_color(int r, int g, int b);
 t_color		ft_int_to_color(int rgb);
 t_color		ft_color_lerp(t_color start, t_color end, double percent);
+int			color_for(t_fract *fract, float percent);
 
 /*
 ** Draw

@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:35:47 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/15 15:16:16 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/22 21:34:23 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	process_zoom(int x, int y, t_fract *fract, double zoom)
 
 	if (fract->menu->enabled)
 		x -= MENU_WIDTH;
-	mx = ft_lerp(-2.5, 1.5, (double)x / (double)fract->map->image->width)
+	mx = ft_lerp(-2.5, 2.5, (double)x / (double)fract->map->image->width)
 	* fract->map->zoom;
 	my = ft_lerp(-1.5, 1.5, (double)y / (double)fract->map->image->height)
 	* fract->map->zoom;
@@ -33,8 +33,26 @@ void	process_zoom(int x, int y, t_fract *fract, double zoom)
 
 /*
 ** Returns the color of the pixel
-** TODO: Reword zoom and movement + adapt for other fractals
+** TODO: Adapt for other fractals
 */
+
+int		color_for(t_fract *fract, float percent)
+{
+	if (percent < 0.25)
+		return (ft_color_lerp(fract->menu->start_color,
+			(t_color){.color = 0xFF0000}, (percent - 0.0) * 1 / (0.25 - 0.0)).color);
+	if (percent < 0.5)
+		return (ft_color_lerp((t_color){.color = 0xFF0000},
+			(t_color){.color = 0x00FF00}, (percent - 0.25) * 1 / (0.50 - 0.25)).color);
+	if (percent < 0.75)
+		return (ft_color_lerp((t_color){.color = 0x00FF00},
+			(t_color){.color = 0x0000FF}, (percent - 0.50) * 1 / (0.75 - 0.50)).color);
+	if (percent < 0.90)
+		return (ft_color_lerp((t_color){.color = 0x0000FF},
+			(t_color){.color = 0xFF00FF}, (percent - 0.75) * 1 / (0.90 - 0.75)).color);
+	return (ft_color_lerp((t_color){.color = 0xFF00FF},
+		fract->menu->end_color, (percent - 0.90) * 1 / (1.0 - 0.90)).color);
+}
 
 int		pixel_process(t_fract *fract, t_image *img, int x, int y)
 {
@@ -44,11 +62,11 @@ int		pixel_process(t_fract *fract, t_image *img, int x, int y)
 	double	nu;
 
 	pix = fract->map->processor(
-		ft_lerp(-2.5, 1.5, (double)x / (double)img->width) * fract->map->zoom +
+		ft_lerp(-2.5, 2.5, (double)x / (double)img->width) * fract->map->zoom +
 		fract->map->x_offset,
 		ft_lerp(-1.5, 1.5, (double)y / (double)img->height) * fract->map->zoom +
 		fract->map->y_offset,
-		fract->map->max_iter);
+		fract->map);
 	if (pix.iterations == fract->map->max_iter)
 		return (0);
 	if (fract->map->smooth)
@@ -61,9 +79,9 @@ int		pixel_process(t_fract *fract, t_image *img, int x, int y)
 	}
 	else
 		i = (double)pix.iterations;
-	return (ft_color_to_int(ft_color_lerp(fract->menu->start_color,
-		fract->menu->end_color,
-		i / (double) fract->map->max_iter)));
+	return (color_for(fract, i / (double) fract->map->max_iter));
+	//return (ft_color_lerp(fract->menu->start_color,
+	//	fract->menu->end_color, i / (double) fract->map->max_iter).color);
 }
 
 void	*render_partition(void *ptr)

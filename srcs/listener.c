@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:23:26 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/15 16:37:09 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/22 21:16:41 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,18 +75,24 @@ int		handle_button_movement(int x, int y, t_fract *fract)
 	int dx;
 	int dy;
 
+	if (x < 0 || y < 0)
+		return (1);
 	dx = fract->ctrl.last_x - x;
 	dy = fract->ctrl.last_y - y;
 	fract->ctrl.last_x = x;
 	fract->ctrl.last_y = y;
 	ft_handle_r_press(x, y, fract);
 	count = ft_handle_rgb_press(x, y, fract) ? 1 : 0;
-	/*if (!fract->ctrl.inside_menu && fract->ctrl.mouse & (1L << BUT1_KEY))
+	if (fract->ctrl.locked == 0 && fract->map->processor == process_julia)
 	{
+		if (fract->menu->enabled)
+			x -= MENU_WIDTH;
+		fract->map->real = ft_lerp(-1, 1,
+			(double)x / (double)fract->map->image->width);
+		fract->map->imaginary = ft_lerp(1, -1,
+			(double)y / (double)fract->map->image->height);
 		count++;
-		fract->map->x_offset += 0.003 / fract->map->zoom * (dx / 5);
-		fract->map->y_offset += 0.003 / fract->map->zoom * (dy / 5);
-	}*/
+	}
 	if (count)
 		render(fract);
 	return (1);
@@ -102,16 +108,18 @@ int		handle_keypress(int key, t_fract *fract)
 		fract->map->max_iter += 5;
 	else if (key == M_KEY)
 		fract->menu->enabled ^= 1;
-	else if (key == UP_KEY)
-		fract->map->y_offset += 0.003 / fract->map->zoom;
-	else if (key == DOWN_KEY)
-		fract->map->y_offset -= 0.003 / fract->map->zoom;
-	else if (key == LEFT_KEY)
-		fract->map->x_offset += 0.003 / fract->map->zoom;
-	else if (key == RIGHT_KEY)
-		fract->map->x_offset -= 0.003 / fract->map->zoom;
+	else if (key >= 123 && key <= 126)
+		handle_movement(key, fract);
 	else if (key == S_KEY)
 		fract->map->smooth ^= 1;
+	else if (key == K1_KEY)
+		fract->map->processor = process_mandelbrot;
+	else if (key == K2_KEY)
+		fract->map->processor = process_julia;
+	else if (key == K3_KEY)
+		fract->map->processor = process_burning_ship;
+	else if (key == L_KEY)
+		fract->ctrl.locked ^= 1;
 	else
 		return (1);
 	if (fract->menu->enabled)
