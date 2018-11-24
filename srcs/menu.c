@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/24 15:20:14 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/22 22:38:59 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/25 00:37:35 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,13 @@ void		ft_put_rgb_selector(t_menu *menu)
 	}
 }
 
-void		ft_init_menu(t_fract *fract)
+int			ft_init_menu(t_fract *fract)
 {
 	if (!(fract->menu = ft_new_menu(fract)))
 	{
-		ft_printf_fd(2, "fractol: could not allocate enough memory\n");
-		destroy_fract_exit(fract);
+		ft_printf_fd(2, "Fractol: Menu out of memory\n");
+		destroy_fract(fract);
+		return (0);
 	}
 	ft_draw_square(fract->menu->img, to_vec2d(0, 0),
 			to_vec2d(MENU_WIDTH, WIN_HEIGHT), MENU_COLOR);
@@ -108,4 +109,5 @@ void		ft_init_menu(t_fract *fract)
 	ft_put_xpm_file_to_image(fract, "logo19.xpm",
 			fract->menu->img, to_vec2d(135, 140));
 	ft_put_menu(fract);
+	return (1);
 }

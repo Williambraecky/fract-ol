@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:24:31 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/21 19:11:20 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/24 23:30:42 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void	destroy_menu(t_fract *fract, t_menu *menu)
 		return ;
 	if (menu->img)
 		destroy_image(fract, menu->img);
+	if (menu->colors)
+		ft_memdel((void **)&(menu->colors));
 	free(menu);
 }
 
@@ -38,14 +40,29 @@ void	destroy_map(t_fract *fract, t_map *map)
 	ft_memdel((void **)&map);
 }
 
-void	destroy_fract_exit(t_fract *fract)
+void	destroy_fract(t_fract *fract)
 {
 	if (!fract)
-		exit(0);
+		return ;
 	destroy_map(fract, fract->map);
 	destroy_menu(fract, fract->menu);
 	mlx_destroy_window(fract->mlx_ptr, fract->win_ptr);
+	*(fract->count) -= 1;
 	ft_memdel((void **)&fract);
-	fract = NULL;
-	exit(0);
+}
+
+void	destroy_fract_exit(t_fract *fract)
+{
+	if (!fract)
+		return ;
+	destroy_map(fract, fract->map);
+	destroy_menu(fract, fract->menu);
+	mlx_destroy_window(fract->mlx_ptr, fract->win_ptr);
+	*(fract->count) -= 1;
+	if (*(fract->count) == 0)
+	{
+		ft_memdel((void **)&fract);
+		exit(0);
+	}
+	ft_memdel((void **)&fract);
 }

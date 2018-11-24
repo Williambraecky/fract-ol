@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 16:36:14 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/22 22:14:16 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/24 23:00:33 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ t_fract		*ft_new_fract(void)
 		return (NULL);
 	if (!(fract->map = ft_new_map()))
 	{
-		free(fract);
+		destroy_fract(fract);
 		return (NULL);
 	}
 	return (fract);

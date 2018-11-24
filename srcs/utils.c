@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:06:21 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/22 15:42:33 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/24 22:55:09 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,12 @@ void	handle_movement(int keycode, t_fract *fract)
 			m = ft_lerp(-2.5, 2.5, 0.51) * fract->map->zoom;
 		fract->map->x_offset += m;
 	}
+}
+
+int		fractal_exists(char *str)
+{
+	if (ft_strequ(str, "mandelbrot") || ft_strequ(str, "julia") ||
+		ft_strequ(str, "burningship"))
+		return (1);
+	return (0);
 }

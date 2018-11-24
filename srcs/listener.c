@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:23:26 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/22 22:49:34 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/25 00:39:11 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,6 @@ int		handle_mouseclicks(int button, int x, int y, t_fract *fract)
 		render(fract);
 	return (1);
 }
-
-/*
-** TODO: Redo movement -> process zoom has accurate movement
-*/
 
 int		handle_button_movement(int x, int y, t_fract *fract)
 {
@@ -64,10 +60,17 @@ int		handle_button_movement(int x, int y, t_fract *fract)
 	return (1);
 }
 
+/*
+** TODO: handle ESC better
+*/
+
 int		handle_keypress(int key, t_fract *fract)
 {
 	if (key == ESC_KEY)
+	{
 		destroy_fract_exit(fract);
+		return (1);
+	}
 	else if (key == MN_KEY && fract->map->max_iter > 7)
 		fract->map->max_iter -= 5;
 	else if (key == PL_KEY)
@@ -78,12 +81,6 @@ int		handle_keypress(int key, t_fract *fract)
 		handle_movement(key, fract);
 	else if (key == S_KEY)
 		fract->map->smooth ^= 1;
-	else if (key == K1_KEY)
-		fract->map->processor = process_mandelbrot;
-	else if (key == K2_KEY)
-		fract->map->processor = process_julia;
-	else if (key == K3_KEY)
-		fract->map->processor = process_burning_ship;
 	else if (key == L_KEY)
 		fract->ctrl.locked ^= 1;
 	else if (key == C_KEY)

@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 10:46:53 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/22 22:49:43 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/25 00:39:59 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,7 @@ struct		s_fract
 	t_menu	*menu;
 	t_map	*map;
 	t_ctrl	ctrl;
+	int		*count;
 };
 
 typedef pthread_t	t_pthr;
@@ -160,12 +161,13 @@ t_fract		*ft_new_fract(void);
 t_map		*ft_new_map(void);
 void		destroy_fract_exit(t_fract *fract);
 void		destroy_image(t_fract *fract, t_image *image);
+void		destroy_fract(t_fract *fract);
 
 /*
 ** Menu
 */
 
-void		ft_init_menu(t_fract *fract);
+int			ft_init_menu(t_fract *fract);
 void		ft_put_menu(t_fract *fract);
 void		ft_put_rgb_target(t_fract *fract, t_menu *menu);
 void		ft_put_rgb_selector(t_menu *menu);
@@ -209,7 +211,6 @@ void		exit_error_destroy(char *message, t_fract *fract);
 */
 
 int			ft_rgb_to_int(int r, int g, int b);
-int			ft_color_to_int(t_color color);
 t_color		ft_rgb_to_color(int r, int g, int b);
 t_color		ft_int_to_color(int rgb);
 t_color		ft_color_lerp(t_color start, t_color end, double percent);
@@ -231,6 +232,7 @@ void		ft_draw_square(t_image *image, t_vec2d start, t_vec2d end,
 
 t_vec2d		to_vec2d(int x, int y);
 int			check_map(t_fract *fract);
+int			fractal_exists(char *str);
 
 /*
 ** Xpm
