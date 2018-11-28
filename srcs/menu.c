@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/24 15:20:14 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/25 00:37:35 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/27 14:09:25 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_color		color_for(t_fract *fract, double percent)
 			return (ft_color_lerp(prev_color, fract->menu->colors[i].color,
 				(percent - prev_prcnt) * 1 /
 				(fract->menu->colors[i].percent - prev_prcnt)));
-		prev_prcnt = fract->menu->colors[i].percent;
+			prev_prcnt = fract->menu->colors[i].percent;
 		prev_color = fract->menu->colors[i].color;
 		i++;
 	}

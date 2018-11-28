@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 10:33:14 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/24 23:31:20 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/27 14:08:30 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ t_pix	process_burning_ship(double x, double y, t_map *map)
 	while (iterations < map->max_iter && (zx2 + zy2) < 256.0)
 	{
 		zy = fabs(2 * zx * zy) + y;
-		zx= fabs(zx2 - zy2 + x);
+		zx = fabs(zx2 - zy2 + x);
 		zx2 = zx * zx;
 		zy2 = zy * zy;
 		iterations++;

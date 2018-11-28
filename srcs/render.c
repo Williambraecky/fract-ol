@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:35:47 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/24 23:36:24 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2018/11/27 15:15:13 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	process_zoom(int x, int y, t_fract *fract, double zoom)
 
 /*
 ** Returns the color of the pixel
-** TODO: Adapt for other fractals + aspect ratio
+** TODO: Adapt for other fractals
+** + Implement controled color cycling
 */
 
 int		pixel_process(t_fract *fract, t_image *img, int x, int y)
@@ -61,8 +62,8 @@ int		pixel_process(t_fract *fract, t_image *img, int x, int y)
 	}
 	else
 		i = (double)pix.iterations;
-	//return (color_for(fract, fmod(i, 9) / (9)).color);
-	return (color_for(fract, i / (double) fract->map->max_iter).color);
+	return (color_for(fract, fmod(i, 9) / (9)).color);
+	//return (color_for(fract, i / (double) fract->map->max_iter).color);
 }
 
 void	*render_partition(void *ptr)
