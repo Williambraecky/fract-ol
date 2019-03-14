@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 10:46:53 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/25 00:39:59 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/03/14 23:26:46 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ struct		s_map
 	double	y_offset;
 	double	real;
 	double	imaginary;
+	int		julia_n;
 };
 
 typedef struct s_menu	t_menu;
@@ -198,6 +199,7 @@ void		handle_movement(int keycode, t_fract *fract);
 t_pix		process_mandelbrot(double x, double y, t_map *map);
 t_pix		process_julia(double x, double y, t_map *map);
 t_pix		process_burning_ship(double x, double y, t_map *map);
+t_pix		process_multijulia(double x, double y, t_map *map);
 
 /*
 ** Errors

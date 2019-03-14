@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 10:46:24 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/25 00:38:03 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/03/14 23:25:32 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static void	init_fract(t_fract *fract, char *arg)
 		fract->map->processor = process_julia;
 	else if (ft_strequ("burningship", arg))
 		fract->map->processor = process_burning_ship;
+	else if (ft_strequ("multijulia", arg))
+		fract->map->processor = process_multijulia;
 	mlx_key_hook(fract->win_ptr, handle_keypress, fract);
 	mlx_mouse_hook(fract->win_ptr, handle_mouseclicks, fract);
 	mlx_hook(fract->win_ptr, BUTTONRELEASE, 0, handle_mouseclicks, fract);

@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 16:36:14 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/24 23:00:33 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/03/14 23:29:11 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ t_map		*ft_new_map(void)
 
 	if (!(map = ft_memalloc(sizeof(*map))))
 		return (NULL);
+	map->julia_n = 5;
 	map->zoom = 1;
 	map->smooth = 1;
 	map->max_iter = 32;

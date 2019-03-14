@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:23:26 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/28 15:23:52 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/03/14 23:33:04 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ int		handle_button_movement(int x, int y, t_fract *fract)
 	fract->ctrl.last_x = x;
 	fract->ctrl.last_y = y;
 	count = menu_listener(x, y, fract, 1) ? 1 : 0;
-	if (fract->ctrl.locked == 0 && fract->map->processor == process_julia &&
+	if (fract->ctrl.locked == 0 && (fract->map->processor == process_julia
+			|| fract->map->processor == process_multijulia) &&
 		(x >= MENU_WIDTH || !fract->menu->enabled))
 	{
 		if (fract->menu->enabled)
