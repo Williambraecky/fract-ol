@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 10:46:24 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/03/14 23:25:32 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/03/14 23:35:43 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,14 @@ static void	read_args(void *mlx_ptr, int *count, int argc, char **argv)
 		(*count) += 1;
 	}
 }
+
+/*
+** TODO: Make sure no leaks are possible
+** TODO: Implement subpixel logic for smoother zoom and maybe movements
+** TODO: Norm everything
+** TODO: Optimize multijulia
+** TODO: Refactor fractol.h
+*/
 
 int			main(int argc, char **argv)
 {
