@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 16:36:14 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/03/14 23:29:11 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/03/18 14:32:26 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ t_image		*ft_new_image(t_fract *fract, int width, int height)
 		free(img);
 		return (NULL);
 	}
-	img->data = mlx_get_data_addr(img->img_ptr,
+	img->data = (int*)mlx_get_data_addr(img->img_ptr,
 			&(img->bpp), &(img->size_line), &(img->endian));
 	img->bpp /= 8;
 	img->width = width;

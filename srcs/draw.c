@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 11:02:48 by wbraeckm          #+#    #+#             */
-/*   Updated: 2018/11/06 11:16:11 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/03/18 14:45:22 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_img_put_pixel(t_image *image, int x, int y, int color)
 {
 	if (x < 0 || x >= image->width || y < 0 || y >= image->height)
 		return ;
-	*(int *)(image->data + (y * image->width + x) * image->bpp) = color;
+	image->data[y * image->width + x] = color;
 }
 
 /*

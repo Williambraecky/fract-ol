@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 10:46:24 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/03/14 23:35:43 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/03/18 15:04:47 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int			main(int argc, char **argv)
 	read_args(mlx_ptr, &count, argc, argv);
 	if (count == 0)
 		exit_error("No valid fractal.\n\
-Usage: ./fractol [mandelbrot|julia|burningship]");
+Usage: ./fractol [mandelbrot|julia|burningship|multijulia]");
 	mlx_loop(mlx_ptr);
 	return (0);
 }

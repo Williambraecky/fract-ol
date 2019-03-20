@@ -6,7 +6,7 @@
 /*   By: wbraeckm <wbraeckm@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/11/06 10:46:53 by wbraeckm          #+#    #+#             */
-/*   Updated: 2019/03/14 23:26:46 by wbraeckm         ###   ########.fr       */
+/*   Updated: 2019/03/18 14:33:07 by wbraeckm         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ typedef struct s_image	t_image;
 struct		s_image
 {
 	void	*img_ptr;
-	char	*data;
+	int		*data;
 	int		bpp;
 	int		size_line;
 	int		endian;
